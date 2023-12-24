@@ -1,0 +1,26 @@
+{
+  "name": "clam",
+  "version": "1.0.0",
+  "description": "Frontend part with Tailwind CSS of the Gowebly project.",
+  "license": "MIT",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "source": [
+    "./assets/styles.css"
+  ],
+  "targets": {
+    "default": {
+      "distDir": "./static"
+    }
+  },
+  "scripts": {
+    "watch": "npx --yes parcel watch",
+    "build:dev": "npx --yes parcel build --no-optimize",
+    "build:prod": "npx --yes parcel build"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "latest",
+    "parcel": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest"
+  }
+}

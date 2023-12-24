@@ -1,0 +1,49 @@
+package pages
+
+// MetaTags defines meta tags.
+
+templ MetaTags(keywords, description string) {
+	<meta name="keywords" content={ keywords }/>
+	<meta name="description" content={ description }/>
+}
+
+// styledTextStyles defines CSS styles for component.
+
+css styledTextStyles() {
+	color: blue;
+	margin: 1rem 0;
+}
+
+templ BodyContent(h1, text string) {
+	<main class="p-4 md:p-8 lg:max-w-screen-md">
+		<div class="flex flex-col gap-8">
+			<p>
+				<img width="196px" src="/static/images/logo.svg" alt="logo"/>
+			</p>
+			<div>
+				<h1>{ h1 }</h1>
+				<p>{ text }</p>
+			</div>
+			<div>
+				<form class="pb-8">
+					<input
+						class="border border-gray-300 rounded-md px-4 py-2 w-96"
+						type="search"
+						name="search"
+						placeholder="Search..."
+						hx-get="/api/podcasts"
+						hx-trigger="keyup changed delay:500ms, search"
+						hx-target="#podcasts"
+						hx-sync="this:replace"
+					/>
+				</form>
+				<div id="podcasts" hx-get="/api/podcasts" hx-trigger="load"></div>
+			</div>
+		</div>
+	</main>
+}
+
+// BodyScripts defines JavaScript code.
+
+script BodyScripts() {
+}

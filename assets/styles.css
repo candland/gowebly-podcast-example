@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* User styles */
+
+@layer base {
+    body {
+        @apply bg-white text-slate-800 font-sans;
+    }
+}

@@ -1,0 +1,56 @@
+package podcastHtml
+
+import "clam/api"
+import "fmt"
+
+//	Images        string `json:"images.default"`
+//	Thumbnail     string `json:"images.thumbnail"`
+//	PublisherName string `json:"publisherName"`
+//	Description   string `json:"description"`
+//	CategoryName  string `json:"categoryName"`
+//	PlaySequence  string `json:"playSequence"`
+
+templ PodcastItem(p api.Podcast) {
+	<li class="flex flex-col md:flex-row gap-4">
+		<div class="flex-1 min-w-32">
+			<img class="w-full" src={ p.Images.Thumbnail } alt={ fmt.Sprintf("%s cover image", p.Title) }/>
+		</div>
+		<div class="flex flex-col gap-4">
+			<h2 class="text-lg font-medium">{ p.Title }</h2>
+			<div class="flex flex-row gap-4 text-gray-600">
+				<span>{ p.PublisherName }</span><span>{ p.CategoryName }</span>
+			</div>
+			<p class="text-gray-800">{ p.Description }</p>
+		</div>
+	</li>
+}
+
+templ PodcastList(podcasts api.Podcasts) {
+	<ul class="flex flex-col gap-8 pb-16">
+		for _, p := range podcasts.Podcasts {
+			@PodcastItem(p)
+		}
+	</ul>
+	<ul class="flex flex-row gap-4 pb-16">
+		<li>
+			if n := podcasts.GetPrevPage(); n != "" {
+				<button
+					hx-get={ fmt.Sprintf("/api/podcasts?page=%s", n) }
+					hx-target="#podcasts"
+					hx-swap="innerHTML show:top"
+					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+				>Prev</button>
+			}
+		</li>
+		<li>
+			if n := podcasts.GetNextPage(); n != "" {
+				<button
+					hx-get={ fmt.Sprintf("/api/podcasts?page=%s", n) }
+					hx-target="#podcasts"
+					hx-swap="innerHTML show:top"
+					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+				>Next</button>
+			}
+		</li>
+	</ul>
+}
