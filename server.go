@@ -57,7 +57,6 @@ func runServer() error {
 	server.Get("/", indexViewHandler)
 
 	// Handle API endpoints.
-	server.Get("/api/show", showContentAPIHandler)
 	server.Get("/api/podcasts", getPodcastsAPIHandler)
 
 	return server.Listen(fmt.Sprintf(":%d", port))
