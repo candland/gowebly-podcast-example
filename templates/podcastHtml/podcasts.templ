@@ -26,31 +26,41 @@ templ PodcastItem(p api.Podcast) {
 }
 
 templ PodcastList(podcasts api.Podcasts) {
-	<ul class="flex flex-col gap-8 pb-16">
-		for _, p := range podcasts.Podcasts {
-			@PodcastItem(p)
-		}
-	</ul>
-	<ul class="flex flex-row gap-4 pb-16">
-		<li>
-			if n := podcasts.GetPrevPage(); n != "" {
-				<button
-					hx-get={ fmt.Sprintf("/api/podcasts?page=%s", n) }
-					hx-target="#podcasts"
-					hx-swap="innerHTML show:top"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-				>Prev</button>
+	if podcasts.Status == 200 {
+		<ul class="flex flex-col gap-8 pb-16">
+			for _, p := range podcasts.Podcasts {
+				@PodcastItem(p)
 			}
-		</li>
-		<li>
-			if n := podcasts.GetNextPage(); n != "" {
-				<button
-					hx-get={ fmt.Sprintf("/api/podcasts?page=%s", n) }
-					hx-target="#podcasts"
-					hx-swap="innerHTML show:top"
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-				>Next</button>
-			}
-		</li>
-	</ul>
+		</ul>
+		<ul class="flex flex-row gap-4 pb-16">
+			<li>
+				if n := podcasts.GetPrevPage(); n != "" {
+					<button
+						hx-get={ fmt.Sprintf("/api/podcasts?page=%s", n) }
+						hx-target="#podcasts"
+						hx-swap="innerHTML show:top"
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+					>Prev</button>
+				}
+			</li>
+			<li>
+				if n := podcasts.GetNextPage(); n != "" {
+					<button
+						hx-get={ fmt.Sprintf("/api/podcasts?page=%s", n) }
+						hx-target="#podcasts"
+						hx-swap="innerHTML show:top"
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+					>Next</button>
+				}
+			</li>
+		</ul>
+	} else if podcasts.Status == 404 {
+		<div class="py-8">
+			<p>No podcasts found</p>
+		</div>
+	} else {
+		<div class="py-8">
+			<p>Something went wrong</p>
+		</div>
+	}
 }

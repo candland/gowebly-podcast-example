@@ -79,7 +79,7 @@ func BodyContent(h1, text string) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main class=\"p-4 md:p-8 lg:max-w-screen-md\"><div class=\"flex flex-col gap-8\"><p><img width=\"196px\" src=\"/static/images/logo.svg\" alt=\"logo\"></p><div><h1 class=\"text-3xl font-medium\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main class=\"p-4 md:p-8 lg:max-w-screen-md\" hx-ext=\"loading-states\"><div class=\"flex flex-col gap-8\"><p><img width=\"196px\" src=\"/static/images/logo.svg\" alt=\"logo\"></p><div><h1 class=\"text-3xl font-medium\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -105,7 +105,16 @@ func BodyContent(h1, text string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div><div><form class=\"pb-8\"><input class=\"border border-gray-300 rounded-md px-4 py-2 w-96\" type=\"search\" name=\"search\" placeholder=\"Search...\" hx-get=\"/api/podcasts\" hx-trigger=\"keyup changed delay:500ms, search\" hx-target=\"#podcasts\" hx-sync=\"this:replace\"></form><div id=\"podcasts\" hx-get=\"/api/podcasts\" hx-trigger=\"load\"></div></div></div></main>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div><div><form class=\"pb-8\" hx-get=\"/api/podcasts\" hx-target=\"#podcasts\"><input class=\"border border-gray-300 rounded-md px-4 py-2 w-96\" type=\"search\" name=\"search\" placeholder=\"Search...\" hx-get=\"/api/podcasts\" hx-trigger=\"keyup changed delay:500ms, search\" hx-target=\"#podcasts\" hx-sync=\"this:replace\"><div data-loading class=\"pl-4\"><span class=\"px-2 py-1 rounded bg-green-400 border border-green-500 text-sm\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Var5 := `Loading...`
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></div></form><div id=\"podcasts\" hx-get=\"/api/podcasts\" hx-trigger=\"load\" class=\"transition-all ease-in-out duration-400\" data-loading-class=\"bg-gray-300 opacity-70\"></div></div></div></main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

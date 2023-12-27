@@ -9,3 +9,10 @@
         @apply bg-white text-slate-800 font-sans;
     }
 }
+
+@layer utilities {
+    [data-loading] {
+      display: none;
+    }
+}
+

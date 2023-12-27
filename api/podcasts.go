@@ -40,6 +40,7 @@ type Podcasts struct {
 	Podcasts []Podcast `json:"podcasts"`
 	Page     string    `json:"page"`
 	Search   string    `json:"search"`
+	Status   int       `json:"status"`
 }
 
 func (p Podcasts) GetPrevPage() string {
@@ -96,12 +97,20 @@ func GetPodcasts(search string, page string) (Podcasts, error) {
 	}
 	// Close the HTTP response body.
 	defer resp.Body.Close()
-	// Decode the JSON response into a slice of Podcast structs.
-	var podcasts []Podcast
-	if err := json.NewDecoder(resp.Body).Decode(&podcasts); err != nil {
-		return result, err
+
+	result.Status = resp.StatusCode
+	if resp.StatusCode == 200 {
+		// Decode the JSON response into a slice of Podcast structs.
+		var podcasts []Podcast
+
+		if err := json.NewDecoder(resp.Body).Decode(&podcasts); err != nil {
+			fmt.Println(resp.Body)
+			return result, err
+		}
+		// Return the slice of Podcast structs.
+		result.Podcasts = podcasts
+	} else {
+		result.Podcasts = []Podcast{}
 	}
-	// Return the slice of Podcast structs.
-	result.Podcasts = podcasts
 	return result, nil
 }

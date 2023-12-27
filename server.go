@@ -44,6 +44,8 @@ func runServer() error {
 
 	// Add Fiber middlewares.
 	server.Use(logger.New())
+
+	// Add rate limiting
 	server.Use(limiter.New(limiter.Config{
 		Max:               20,
 		Expiration:        30 * time.Second,
@@ -55,6 +57,9 @@ func runServer() error {
 
 	// Handle index page view.
 	server.Get("/", indexViewHandler)
+
+	// Handle health.
+	server.Get("/health", healthHandler)
 
 	// Handle API endpoints.
 	server.Get("/api/podcasts", getPodcastsAPIHandler)

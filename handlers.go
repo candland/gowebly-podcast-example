@@ -37,6 +37,12 @@ func indexViewHandler(c *fiber.Ctx) error {
 
 }
 
+func healthHandler(c *fiber.Ctx) error {
+	return c.JSON(map[string]interface{}{
+		"status": "ok",
+	})
+}
+
 func getPodcastsAPIHandler(c *fiber.Ctx) error {
 	if c.Get("HX-Request") == "" || c.Get("HX-Request") != "true" {
 		// If not, return HTTP 400 error.
